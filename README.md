@@ -341,7 +341,7 @@ See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed contribution guidelines
 ## Resources
 
 - [Jamf Pro API Documentation](https://developer.jamf.com/jamf-pro/docs/jamf-pro-api-overview)
-- [Terraform Jamf Provider](https://registry.terraform.io/providers/deploymenttheory/jamf/latest/docs)
+- [Terraform Jamf Provider](https://registry.terraform.io/providers/deploymenttheory/jamfpro/latest/docs)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Release Please](https://github.com/googleapis/release-please)
 
