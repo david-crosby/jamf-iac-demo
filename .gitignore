@@ -1,0 +1,78 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which might contain sensitive data
+*.tfvars
+*.tfvars.json
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# IDE specific
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Terraform plan files
+*.tfplan
+tfplan
+
+# Lock files (include in repo for consistent versions)
+# Comment out if you want to ignore lock files
+# .terraform.lock.hcl
+
+# Backup files
+*.backup
+*.bak
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Logs
+*.log
+logs/
+
+# SSH keys
+*.pem
+*.key
+id_rsa
+id_rsa.pub

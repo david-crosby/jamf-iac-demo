@@ -1,0 +1,186 @@
+┌─────────────────────────────────────────────────────────────────┐
+│          JAMF PRO IAC - QUICK REFERENCE CARD                    │
+│              Environment Variables                              │
+└─────────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════╗
+║  INITIAL SETUP (One Time)                                     ║
+╚═══════════════════════════════════════════════════════════════╝
+
+1. Create .env file:
+   ./scripts/setup-local.sh
+
+2. Edit .env and add credentials with export statements:
+   nano .env
+
+   Must include:
+   export JAMF_URL="https://yourinstance.jamfcloud.com"
+   export JAMF_CLIENT_ID="your-client-id"
+   export JAMF_CLIENT_SECRET="your-secret"
+   export TF_VAR_jamf_url="$JAMF_URL"
+   export TF_VAR_jamf_client_id="$JAMF_CLIENT_ID"
+   export TF_VAR_jamf_client_secret="$JAMF_CLIENT_SECRET"
+   export TF_VAR_environment="dev"
+
+3. Install direnv (optional but recommended):
+   brew install direnv
+   echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+   source ~/.zshrc
+   echo 'dotenv' > .envrc
+   direnv allow
+
+╔═══════════════════════════════════════════════════════════════╗
+║  EVERY SESSION (Without direnv)                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+1. Load environment:
+   source .env
+
+2. Verify loaded:
+   ./scripts/verify-env.sh
+
+3. Check specific variable:
+   echo $TF_VAR_jamf_url
+
+╔═══════════════════════════════════════════════════════════════╗
+║  WITH DIRENV (Automatic)                                      ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Just cd into the directory:
+   cd jamf-iac-demo
+   
+Variables load automatically! ✨
+
+╔═══════════════════════════════════════════════════════════════╗
+║  TERRAFORM COMMANDS                                           ║
+╚═══════════════════════════════════════════════════════════════╝
+
+# Initialise (first time)
+cd terraform && terraform init
+
+# Check what would change
+terraform plan
+
+# Apply changes (local testing)
+terraform apply
+
+# Format code
+terraform fmt -recursive
+
+# Validate syntax
+terraform validate
+
+╔═══════════════════════════════════════════════════════════════╗
+║  GIT WORKFLOW                                                 ║
+╚═══════════════════════════════════════════════════════════════╝
+
+1. Create branch:
+   git checkout -b feat/add-policy
+
+2. Make changes to .tf files
+
+3. Commit (semantic):
+   git commit -m "feat(policies): add software update policy"
+
+4. Push and PR:
+   git push origin feat/add-policy
+   gh pr create
+
+5. Merge → Auto-deploys to Jamf! 🚀
+
+╔═══════════════════════════════════════════════════════════════╗
+║  SEMANTIC COMMIT TYPES                                        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+feat:     New feature (→ minor version bump)
+fix:      Bug fix (→ patch version bump)
+docs:     Documentation only
+chore:    Maintenance
+refactor: Code refactoring
+BREAKING: Breaking change (→ major version bump)
+
+Examples:
+  git commit -m "feat(groups): add engineering group"
+  git commit -m "fix(policy): correct scope criteria"
+  git commit -m "docs: update README"
+
+╔═══════════════════════════════════════════════════════════════╗
+║  TROUBLESHOOTING                                              ║
+╚═══════════════════════════════════════════════════════════════╝
+
+❌ "No value for required variable"
+   → Run: source .env
+   → Verify: ./scripts/verify-env.sh
+   → Ensure .env has export statements
+
+❌ Variables empty (echo $TF_VAR_jamf_url returns nothing)
+   → Check .env syntax (must use export)
+   → Reload: source .env
+
+❌ "Invalid credentials"
+   → Test API: python3 scripts/test-jamf-connection.py
+   → Check credentials in Jamf Pro settings
+
+❌ Terraform init fails
+   → Check internet connection
+   → Verify Terraform installed: terraform version
+   → Try: terraform init -upgrade
+
+╔═══════════════════════════════════════════════════════════════╗
+║  USEFUL SCRIPTS                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+./scripts/setup-local.sh         - Initial setup
+./scripts/verify-env.sh          - Check environment vars
+./scripts/test-jamf-connection.py - Test Jamf API
+
+╔═══════════════════════════════════════════════════════════════╗
+║  DOCUMENTATION                                                ║
+╚═══════════════════════════════════════════════════════════════╝
+
+README.md                - Main documentation
+docs/QUICKSTART.md       - 10-minute setup guide
+docs/ENV-VARS-GUIDE.md   - Detailed env var help
+docs/CONTRIBUTING.md     - Development workflow
+docs/ARCHITECTURE.md     - Technical details
+docs/SETUP-CHECKLIST.md  - Complete checklist
+
+╔═══════════════════════════════════════════════════════════════╗
+║  COMMON ZSH ALIASES (Add to ~/.zshrc)                        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+# Load Jamf environment
+alias jamf-env='source ~/path/to/jamf-iac-demo/.env'
+
+# Quick Terraform commands
+alias tf='terraform'
+alias tfp='terraform plan'
+alias tfa='terraform apply'
+alias tff='terraform fmt -recursive'
+
+# Verify environment
+alias jamf-check='~/path/to/jamf-iac-demo/scripts/verify-env.sh'
+
+╔═══════════════════════════════════════════════════════════════╗
+║  REMEMBER                                                     ║
+╚═══════════════════════════════════════════════════════════════╝
+
+✓ Always source .env before running Terraform
+✓ Never commit .env file
+✓ Use export in .env file
+✓ Use semantic commits
+✓ Review terraform plan before applying
+✓ Test locally before pushing
+
+╔═══════════════════════════════════════════════════════════════╗
+║  GET HELP                                                     ║
+╚═══════════════════════════════════════════════════════════════╝
+
+GitHub Issues: github.com/YOUR_ORG/jamf-iac-demo/issues
+Documentation: See docs/ directory
+Terraform Provider: registry.terraform.io/providers/deploymenttheory/jamfpro/latest/docs
+Jamf API: developer.jamf.com/jamf-pro/docs
+
+╔═══════════════════════════════════════════════════════════════╗
+║  This reference card: docs/QUICK-REFERENCE.txt               ║
+╚═══════════════════════════════════════════════════════════════╝
