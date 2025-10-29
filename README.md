@@ -2,6 +2,8 @@
 
 A learning repository demonstrating CI/CD workflows for managing Jamf Pro tenants using Terraform and Infrastructure as Code principles.
 
+**This is a learning resource. There is no warranty. This is not production code. Under development.**
+
 ## Overview
 
 This repository provides a complete example of managing Jamf Pro configurations using:
